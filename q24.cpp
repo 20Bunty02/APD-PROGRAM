@@ -1,51 +1,43 @@
 #include<iostream>
+#include <cstdlib>
 using namespace std;
-void coin_change(int n)
-{   int total=0;
-    int one_cent=0,ten_cent=0,five_cent=0,twenty_cent=0;
-    int fifty_cent=0,dollar=0;
-	while(n>0)
-	{ total++; 
-	  if(n>=100)
-	{ dollar++;
-	   n-=100;
-	   continue;}
-	   if(n>=50){
-	   fifty_cent++;
-	   n-=50;
-	   continue;
-	   }
-	   if(n>=20){
-	   twenty_cent++;
-	   n-=20;
-	   continue;
-	   }
-	   if(n>=10){
-	   ten_cent++;
-	   n-=10;
-	   continue;
-	   }
-	   if(n>=5){five_cent++;
-     n-=5;
-       continue;
-	   }
-	   if(n>=1){one_cent++;
-	   n-=1;
-	   continue;}
-
+int ispresent(int el,int code[]){
+	for(int i=0;i<4;i++){
+		if(code[i]==el){
+			return 1;
+		}
 	}
-    cout<<"total coins is "<<total;
-    cout<<"\n1 cent= "<<one_cent;
-    cout<<"\n5 cent= "<<five_cent;
-    cout<<"\n10 cent= "<<ten_cent;
-    cout<<"\n20 cent= "<<twenty_cent;
-    cout<<"\n50 cent= "<<fifty_cent;
-    cout<<"\n1 dollar= "<<dollar;
+	return 0;
 }
-int main()
-{ int n;
-cout<<"enter amount in cents (1 dollar = 100 cent) ";
-cin>>n;
-coin_change(n);
-	
+int main(){
+	int code[4]={1,5,2,8};
+	int attempts=0;
+	int hits=0;
+	int sink;
+	int guess[4];
+	while(hits<4){
+      cout<<"\nENTER 4 DIGIT NUMBER ";
+       for(int i=0;i<4;i++){
+       	cin>>guess[i];
+       }
+     attempts+=1;
+     if(code==guess){
+     	hits=4;
+     }
+     else{
+     	hits=0;
+     	sink=0;
+     	for(int i=0;i<4;i++){
+     		if(guess[i]==code[i]){
+     			hits+=1;
+     		}
+     		else if(ispresent(guess[i],code)){
+     			sink+=1;
+     		}
+     	}
+     	cout<<"YOU GOT "<<hits<<" HITS AND "<<sink<<" SINKS";
+     }
+	}
+	cout<<"IT TOOK YOU TO "<<attempts<<" ATTEMPTS TO GUESS THE CODE";
+	return 0;
 }
